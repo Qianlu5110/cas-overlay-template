@@ -29,7 +29,8 @@
                     <recompressZippedFiles>false</recompressZippedFiles>
                     <archive>
                         <compress>false</compress>
-                        <manifestFile>${project.build.directory}/war/work/org.apereo.cas/cas-server-webapp${app.server}/META-INF/MANIFEST.MF
+                        <manifestFile>
+                            ${project.build.directory}/war/work/org.apereo.cas/cas-server-webapp${app.server}/META-INF/MANIFEST.MF
                         </manifestFile>
                     </archive>
                     <overlays>
@@ -57,23 +58,28 @@
             <type>war</type>
             <scope>runtime</scope>
         </dependency>
-        <!--STEP2 引入数据库认证相关 start-->
+
+        <!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-crypto -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-crypto</artifactId>
+            <version>${spring.security.crypto}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apereo.cas/cas-server-core-authentication -->
         <dependency>
             <groupId>org.apereo.cas</groupId>
-            <artifactId>cas-server-support-jdbc</artifactId>
-            <version>${cas.version}</version>
+            <artifactId>cas-server-core-authentication</artifactId>
+            <version>${cas.server.core.authentication}</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apereo.cas/cas-server-support-mongo-core -->
         <dependency>
             <groupId>org.apereo.cas</groupId>
-            <artifactId>cas-server-support-jdbc-drivers</artifactId>
+            <artifactId>cas-server-support-mongo</artifactId>
             <version>${cas.version}</version>
         </dependency>
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.36</version>
-        </dependency>
-        <!--数据库认证相关 end-->
+
 
     </dependencies>
 
@@ -85,6 +91,9 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <spring.security.crypto>4.2.3.RELEASE</spring.security.crypto>
+        <cas.server.core.authentication>5.2.1</cas.server.core.authentication>
+        <cas.server.mongo>5.2.1</cas.server.mongo>
     </properties>
 
     <repositories>
@@ -117,38 +126,4 @@
             <url>https://repo.spring.io/milestone</url>
         </repository>
     </repositories>
-    <!--STEP4 注释掉无用组件
-        <profiles>
-            <profile>
-                <activation>
-                    <activeByDefault>false</activeByDefault>
-                </activation>
-                <id>pgp</id>
-                <build>
-                    <plugins>
-
-                        <plugin>
-                            <groupId>com.github.s4u.plugins</groupId>
-                            <artifactId>pgpverify-maven-plugin</artifactId>
-                            <version>1.1.0</version>
-                            <executions>
-                                <execution>
-                                    <goals>
-                                        <goal>check</goal>
-                                    </goals>
-                                </execution>
-                            </executions>
-                            <configuration>
-                                <pgpKeyServer>hkp://pool.sks-keyservers.net</pgpKeyServer>
-                                <pgpKeysCachePath>${settings.localRepository}/pgpkeys-cache</pgpKeysCachePath>
-                                <scope>test</scope>
-                                <verifyPomFiles>true</verifyPomFiles>
-                                <failNoSignature>false</failNoSignature>
-                            </configuration>
-                        </plugin>
-                </plugins>
-            </build>
-        </profile>
-
-    </profiles>-->
 </project>
